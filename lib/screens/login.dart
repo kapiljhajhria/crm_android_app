@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import '../netwrok-helper.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -9,6 +13,7 @@ class _LogInScreenState extends State<LogInScreen> {
   ScrollController myScrollController;
   TextEditingController emailController;
   TextEditingController pwdController;
+  Session session;
 
   Widget formInputTextBox(
       String fieldName, TextEditingController txtController) {
@@ -33,11 +38,65 @@ class _LogInScreenState extends State<LogInScreen> {
     );
   }
 
+  void _showDialog(alertMsg) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Warning"),
+          content: new Text(alertMsg),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  logInUser() async {
+    String alertMsg = "";
+    if (emailController.text.length == 0) {
+      alertMsg = "Please enter an email id";
+    }
+
+    if (pwdController.text.length == 0)
+      alertMsg = alertMsg + "\n Please enter your password";
+    if (alertMsg.length != 0) {
+      _showDialog(alertMsg);
+      return;
+    }
+    Map dataMap = {"email": emailController.text, "pswd": pwdController.text};
+    Map jsonMap =
+        await session.post('http://10.0.2.2:5000/login', dataMap);
+    if (jsonMap["result"] == "noEmail") {
+      alertMsg = "Email id doesn't exist, please sign up first";
+    } else if (jsonMap["result"] == "passwordError") {
+      alertMsg = "wrong password, please check your password";
+    } else if (jsonMap["result"] == "loggedIn") {
+      // alertMsg="loggedIN"
+      alertMsg = "logged In";
+    }
+
+    if (alertMsg.length != 0) {
+      _showDialog(alertMsg);
+      return;
+    }
+  }
+
   @override
   void initState() {
     emailController = TextEditingController();
     pwdController = TextEditingController();
     myScrollController = ScrollController();
+    session = Session();
     // TODO: implement initState
     super.initState();
   }
@@ -71,6 +130,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   formInputTextBox("Password", pwdController),
                   GestureDetector(
                     onTap: () {
+                      logInUser();
                       setState(() {});
                     },
                     child: Container(
