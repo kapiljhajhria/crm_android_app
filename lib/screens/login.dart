@@ -7,13 +7,17 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   ScrollController myScrollController;
+  TextEditingController emailController;
+  TextEditingController pwdController;
 
-  Widget formInputTextBox(String fieldName) {
+  Widget formInputTextBox(
+      String fieldName, TextEditingController txtController) {
     return Expanded(
       flex: 1,
       child: Container(
         child: Center(
           child: TextField(
+            controller: txtController,
             style: TextStyle(fontSize: 26),
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -31,6 +35,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   void initState() {
+    emailController = TextEditingController();
+    pwdController = TextEditingController();
     myScrollController = ScrollController();
     // TODO: implement initState
     super.initState();
@@ -51,11 +57,6 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
           ),
           Container(
-//              padding: EdgeInsets.fromLTRB(
-//                  0,
-//                  MediaQuery.of(context).size.height * .04,
-//                  0,
-//                  MediaQuery.of(context).size.height * .1),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -66,11 +67,10 @@ class _LogInScreenState extends State<LogInScreen> {
                   MediaQuery.of(context).size.height * .1),
               child: Column(
                 children: <Widget>[
-                  formInputTextBox("Email"),
-                  formInputTextBox("Password"),
+                  formInputTextBox("Email", emailController),
+                  formInputTextBox("Password", pwdController),
                   GestureDetector(
                     onTap: () {
-
                       setState(() {});
                     },
                     child: Container(
