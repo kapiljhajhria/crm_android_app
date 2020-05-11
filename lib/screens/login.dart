@@ -14,8 +14,8 @@ class _LogInScreenState extends State<LogInScreen> {
   TextEditingController pwdController;
   Session session;
 
-  Widget formInputTextBox(String fieldName,
-      TextEditingController txtController) {
+  Widget formInputTextBox(
+      String fieldName, TextEditingController txtController) {
     return Expanded(
       flex: 1,
       child: Container(
@@ -27,9 +27,9 @@ class _LogInScreenState extends State<LogInScreen> {
                 border: OutlineInputBorder(),
                 hintText: fieldName,
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 hintStyle:
-                TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+                    TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
           ),
         ),
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -73,8 +73,7 @@ class _LogInScreenState extends State<LogInScreen> {
       return;
     }
     Map dataMap = {"email": emailController.text, "pswd": pwdController.text};
-    Map jsonMap =
-    await session.post('http://10.0.2.2:5000/login', dataMap);
+    Map jsonMap = await session.post('http://10.0.2.2:5000/login', dataMap);
     if (jsonMap["result"] == "noEmail") {
       alertMsg = "Email id doesn't exist, please sign up first";
     } else if (jsonMap["result"] == "passwordError") {
@@ -91,14 +90,17 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   fetchFormData() async {
-    Map resp = await session.get(
-      "http://10.0.2.2:5000/customers",);
-    if (resp["status"] == 403) {
-//  alert("You need to login to view this page")
+    var r = await session.get("http://10.0.2.2:5000/customers");
+    print("fetched customer data list");
+    print(r);
+//    Map resp = await session.get(
+//      "http://10.0.2.2:5000/customers",);
+//    if (resp["status"] == 403) {
+////  alert("You need to login to view this page")
+//
+//      print("gone to home page");
+//    }
 
-      print("gone to home page");
-    }
-    print(resp);
 //    List dataList = await resp.json();
 
 // return JSON.parse(resp.body);
@@ -117,6 +119,12 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.file_download),
+        onPressed: () {
+          fetchFormData();
+        },
+      ),
       body: Stack(
         children: <Widget>[
           ColorFiltered(
@@ -133,30 +141,18 @@ class _LogInScreenState extends State<LogInScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               margin: EdgeInsets.fromLTRB(
-                  MediaQuery
-                      .of(context)
-                      .size
-                      .width * .08,
-                  MediaQuery
-                      .of(context)
-                      .size
-                      .height * .1,
-                  MediaQuery
-                      .of(context)
-                      .size
-                      .width * .08,
-                  MediaQuery
-                      .of(context)
-                      .size
-                      .height * .1),
+                  MediaQuery.of(context).size.width * .08,
+                  MediaQuery.of(context).size.height * .1,
+                  MediaQuery.of(context).size.width * .08,
+                  MediaQuery.of(context).size.height * .1),
               child: Column(
                 children: <Widget>[
                   formInputTextBox("Email", emailController),
                   formInputTextBox("Password", pwdController),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       await logInUser();
-                      fetchFormData();
+//                      fetchFormData();
                       setState(() {});
                     },
                     child: Container(
@@ -171,14 +167,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         ],
                       ),
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.09,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.75,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      width: MediaQuery.of(context).size.width * 0.75,
                       child: Center(
                         child: Text(
                           "LogIn",
@@ -194,10 +184,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.60,
+                        width: MediaQuery.of(context).size.width * 0.60,
                         margin: EdgeInsets.only(top: 10),
                         alignment: Alignment(1, -0.4),
                         child: RichText(
@@ -209,7 +196,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             children: <TextSpan>[
                               TextSpan(
                                   text:
-                                  'By clicking the button, you are agreeing to our  ',
+                                      'By clicking the button, you are agreeing to our  ',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromRGBO(185, 182, 211, 1.0),
