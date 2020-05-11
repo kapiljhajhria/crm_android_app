@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:requests/requests.dart';
 
 
 class Session {
-  Map<String, String> headers ={'Content-Type': 'application/json'};
+  Map<String, String> headers ={'Content-Type': 'application/json',"credentials": "include"};
 
   Future<Map> get(String url) async {
     http.Response response = await http.get(url, headers: headers);
