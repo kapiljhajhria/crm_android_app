@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crmandroidapp/screens/dataScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
 import '../netwrok-helper.dart';
@@ -80,7 +81,14 @@ class _LogInScreenState extends State<LogInScreen> {
       alertMsg = "wrong password, please check your password";
     } else if (jsonMap["result"] == "loggedIn") {
       // alertMsg="loggedIN"
-      alertMsg = "logged In";
+//      alertMsg = "logged In";
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DataScreen(
+                  session: session,
+                )),
+      );
     }
 
     if (alertMsg.length != 0) {
@@ -93,17 +101,6 @@ class _LogInScreenState extends State<LogInScreen> {
     var r = await session.get("http://10.0.2.2:5000/customers");
     print("fetched customer data list");
     print(r);
-//    Map resp = await session.get(
-//      "http://10.0.2.2:5000/customers",);
-//    if (resp["status"] == 403) {
-////  alert("You need to login to view this page")
-//
-//      print("gone to home page");
-//    }
-
-//    List dataList = await resp.json();
-
-// return JSON.parse(resp.body);
   }
 
   @override
