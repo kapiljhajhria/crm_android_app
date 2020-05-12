@@ -116,12 +116,6 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.file_download),
-        onPressed: () {
-          fetchFormData();
-        },
-      ),
       body: Stack(
         children: <Widget>[
           ColorFiltered(

@@ -19,7 +19,6 @@ class Session {
   String getCookie(String cookieString) {
     String cookie = "";
     List cookiesList = cookieString.split(";");
-//    print(cookiesList);
     cookie = cookie + cookiesList[0] + ";" + cookiesList[3].split(",")[1] + ";";
     print("cookie is: " + cookie);
     return cookie;
@@ -29,8 +28,6 @@ class Session {
     http.Response response =
         await http.post(url, body: jsonEncode(data), headers: headers);
     print("let see headers");
-//    String cookie = response.headers["set-cookie"];
-//    print(cookie);
     updateCookie(response);
     return json.decode(response.body);
   }

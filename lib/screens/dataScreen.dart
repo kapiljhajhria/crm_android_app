@@ -22,6 +22,17 @@ class _DataScreenState extends State<DataScreen> {
     setState(() {});
   }
 
+  logOutUser() async {
+    print("logging out user");
+    var result = await session.post("http://10.0.2.2:5000/logout", {
+      "reqType": "log me out",
+    });
+
+    if (result["status"] == "loggedOut") {
+      Navigator.pop(context);
+    } else {}
+  }
+
   @override
   void initState() {
     session = widget.session;
@@ -47,7 +58,9 @@ class _DataScreenState extends State<DataScreen> {
           ),
           IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () {},
+            onPressed: () {
+              logOutUser();
+            },
           ),
         ],
       ),
