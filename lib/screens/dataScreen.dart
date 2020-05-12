@@ -39,7 +39,11 @@ class _DataScreenState extends State<DataScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: () {},
+            onPressed: () {
+              dataList.clear();
+              setState(() {});
+              fetchFormData();
+            },
           ),
           IconButton(
             icon: Icon(Icons.exit_to_app),
@@ -51,9 +55,30 @@ class _DataScreenState extends State<DataScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: <Widget>[],
-            ),
+          : ListView.builder(
+              itemCount: dataList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  elevation: 6,
+                  child: ListTile(
+                    title: Text(
+                      dataList[index]["name"],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    isThreeLine: true,
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(dataList[index]["gender"]),
+                        Text(dataList[index]["_id"]),
+                      ],
+                    ),
+                    trailing: Text(dataList[index]["contact"]),
+                  ),
+                );
+              }),
     );
   }
 }
