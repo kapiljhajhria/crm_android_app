@@ -17,24 +17,20 @@ class _LogInScreenState extends State<LogInScreen> {
 
   Widget formInputTextBox(
       String fieldName, TextEditingController txtController) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        child: Center(
-          child: TextField(
-            controller: txtController,
-            style: TextStyle(fontSize: 26),
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: fieldName,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                hintStyle:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
-          ),
+    return Container(
+      child: Center(
+        child: TextField(
+          controller: txtController,
+          style: TextStyle(fontSize: 26),
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: fieldName,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              hintStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
         ),
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
     );
   }
 
@@ -130,6 +126,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   child: Center(
                     child: Text(
                       "Use the Best CRM to grow your business",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
@@ -140,10 +137,20 @@ class _LogInScreenState extends State<LogInScreen> {
                 Expanded(
                   flex: 2,
                   child: Card(
+                    elevation: 10,
+//                    margin: EdgeInsets.only(top: 40,bottom: 40),
 //                  margin: EdgeInsets.all(5),
                     color: Colors.blueGrey,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+                        Center(
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(fontSize: 35, color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                         formInputTextBox("Email", emailController),
                         formInputTextBox("Password", pwdController),
                         GestureDetector(
